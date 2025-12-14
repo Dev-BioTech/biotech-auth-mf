@@ -4,6 +4,7 @@ export const useAuthStore = create((set) => ({
   user: null,
   token: null,
   isAuthenticated: false,
+  selectedFarm: null,
   
   setAuth: (user, token) => set({ 
     user, 
@@ -11,9 +12,14 @@ export const useAuthStore = create((set) => ({
     isAuthenticated: true 
   }),
   
+  setSelectedFarm: (farm) => set({
+    selectedFarm: farm
+  }),
+  
   logout: () => set({ 
     user: null, 
     token: null, 
-    isAuthenticated: false 
+    isAuthenticated: false,
+    selectedFarm: null
   })
 }))

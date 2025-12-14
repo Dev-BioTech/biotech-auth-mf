@@ -22,6 +22,7 @@ vite.config.ts.timestamp-*
 .env.development
 .env.production
 .env.test
+.env.develop
 
 # IDE/editor configs
 .vscode/

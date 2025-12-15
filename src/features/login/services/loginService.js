@@ -1,27 +1,30 @@
 import apiClient from '../../../shared/utils/apiClient'
-import { tokenManager } from '../../../shared/utils/tokenManager'
 
 export const loginService = {
   login: async (credentials) => {
-    // Credenciales de prueba temporales
-    if (credentials.email === 'user@biotech.com' && credentials.password === 'admin@biotech.com') {
-      const mockResponse = {
-        token: 'mock-jwt-token-' + Date.now(),
+    try {
+      // Llamar al backend con el formato esperado: { email, password }
+      const response = await apiClient.post('/auth/login', {
+        email: credentials.email,
+        password: credentials.password
+      })
+      
+      // Backend retorna: { token, expiration, userId, email, fullName }
+      const { token, userId, email, fullName } = response.data
+      
+      // Adaptar al formato que espera el frontend
+      return {
+        token,
         user: {
-          id: 1,
-          name: 'Usuario de Prueba',
-          email: 'user@biotech.com',
-          role: 'user',
-          createdAt: new Date().toISOString()
+          id: userId,
+          email: email,
+          name: fullName,
+          fullName: fullName
         }
       }
-      tokenManager.setToken(mockResponse.token)
-      return mockResponse
+    } catch (error) {
+      console.error('Login error:', error)
+      throw error
     }
-    
-    // Si no son las credenciales de prueba, usar la API real
-    const response = await apiClient.post('/auth/login', credentials)
-    tokenManager.setToken(response.data.token)
-    return response.data
   }
 }

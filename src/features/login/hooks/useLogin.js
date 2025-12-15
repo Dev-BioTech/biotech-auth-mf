@@ -12,11 +12,19 @@ export const useLogin = () => {
       setLoading(true);
       setError(null);
       const data = await loginService.login(credentials);
+      
+      // Guardar en el store: setAuth(user, token)
       setAuth(data.user, data.token);
+      
+      // Notificar cambio de autenticación
       window.dispatchEvent(new Event("auth-change"));
+      
       return data;
     } catch (err) {
-      setError(err.response?.data?.message || "Error al iniciar sesión");
+      const errorMessage = err.response?.data?.message || 
+                          err.response?.data || 
+                          "Error al iniciar sesión";
+      setError(errorMessage);
       throw err;
     } finally {
       setLoading(false);

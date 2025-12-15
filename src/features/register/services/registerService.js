@@ -1,23 +1,38 @@
 import apiClient from '../../../shared/utils/apiClient'
-import { tokenManager } from '../../../shared/utils/tokenManager'
 
 export const registerService = async (userData) => {
-  // Modo de prueba: simular registro exitoso
-  const mockResponse = {
-    token: 'mock-jwt-token-' + Date.now(),
-    user: {
-      id: Date.now(),
-      name: userData.name,
+  try {
+    // Llamar al backend con el formato esperado: { fullName, email, password }
+    const response = await apiClient.post('/auth/register', {
+      fullName: userData.name || userData.fullName,
       email: userData.email,
-      role: 'user',
-      createdAt: new Date().toISOString()
+      password: userData.password
+    })
+    
+    // Backend retorna { id: userId } con status 201
+    const userId = response.data.id || response.data
+    
+    // Auto-login después del registro
+    const loginResponse = await apiClient.post('/auth/login', {
+      email: userData.email,
+      password: userData.password
+    })
+    
+    // Backend retorna: { token, expiration, userId, email, fullName }
+    const { token, userId: loginUserId, email, fullName } = loginResponse.data
+    
+    // Adaptar al formato que espera el frontend
+    return {
+      token,
+      user: {
+        id: loginUserId || userId,
+        email: email,
+        name: fullName,
+        fullName: fullName
+      }
     }
+  } catch (error) {
+    console.error('Register error:', error)
+    throw error
   }
-  tokenManager.setToken(mockResponse.token)
-  return mockResponse
-  
-  // Descomentar cuando la API esté lista:
-  // const response = await apiClient.post('/auth/register', userData)
-  // tokenManager.setToken(response.data.token)
-  // return response.data
 }

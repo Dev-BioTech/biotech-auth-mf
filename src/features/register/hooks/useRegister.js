@@ -13,10 +13,18 @@ export const useRegister = () => {
     
     try {
       const response = await registerService(userData)
+      
+      // Guardar en el store: setAuth(user, token)
       setAuth(response.user, response.token)
+      
+      // Notificar cambio de autenticación
+      window.dispatchEvent(new Event('auth-change'))
+      
       return response
     } catch (err) {
-      const errorMessage = err.response?.data?.message || 'Error al registrar usuario'
+      const errorMessage = err.response?.data?.message || 
+                          err.response?.data || 
+                          'Error al registrar usuario'
       setError(errorMessage)
       throw err
     } finally {

@@ -27,8 +27,18 @@ export default defineConfig({
         "./ResetPassword":
           "./src/features/password/components/ResetPasswordForm.jsx",
         "./AuthStore": "./src/shared/store/authStore.js",
+        "./ToastContainer": "./src/shared/components/ui/ToastContainer.jsx",
+        "./ToastStore": "./src/shared/store/toastStore.js",
       },
-      shared: ["react", "react-dom", "react-router-dom", "zustand", "axios"],
+      shared: {
+        react: { singleton: true },
+        "react-dom": { singleton: true },
+        "react-router-dom": { singleton: true },
+        zustand: { singleton: true },
+        axios: { singleton: true },
+        "framer-motion": { singleton: true },
+        "lucide-react": { singleton: true },
+      },
     }),
   ],
   build: {

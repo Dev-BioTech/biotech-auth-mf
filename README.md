@@ -1,192 +1,97 @@
-# 🔐 BioTech Auth - Authentication Microfrontend
+# 🛡️ BioTech Auth Microfrontend
 
-Authentication and user management module for the BioTech ERP.
+<div align="center">
 
-## 🚀 Features
+  <img src="https://biotech-shell.vercel.app/BioTech.webp" alt="BioTech Logo" width="200" />
+  
+  ![Auth Banner](https://capsule-render.vercel.app/api?type=waving&color=6366f1&height=120&section=header&text=Authentication&fontSize=70&animation=fadeIn&fontAlignY=40)
 
-- **Login and Registration**: Authentication forms
-- **Session Management**: JWT tokens with cookies
-- **User Profiles**: View and edit
-- **Roles and Permissions**: Role-based access control
-- **Password Recovery**: Complete flow
-- **Form Validation**: With Yup and React Hook Forms
+  <br />
 
-## 🛠️ Technologies
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Zustand](https://img.shields.io/badge/Zustand-orange?style=for-the-badge&logo=react)](https://github.com/pmndrs/zustand)
 
-![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite%20+%20Module%20Federation-7.2.4-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![React Hook Form](https://img.shields.io/badge/React%20Hook%20Form-7.51.3-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white)
-![Yup](https://img.shields.io/badge/Yup-Validation-FF6B6B?style=for-the-badge)
-![Axios](https://img.shields.io/badge/Axios-HTTP%20Client-5A29E4?style=for-the-badge)
-![js-cookie](https://img.shields.io/badge/js--cookie-Token%20Management-FFCA28?style=for-the-badge)
-![Zustand](https://img.shields.io/badge/Zustand-State%20Management-443E38?style=for-the-badge)
-![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-4.1.17-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+  <br />
 
-## 📦 Installation
+  <a href="https://biotech-shell.vercel.app/">
+    <img src="https://img.shields.io/badge/🚀_Live_App-Access_Platform-6366f1?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+  </a>
+  <a href="https://github.com/Nikotastic/BioTech-Backend">
+    <img src="https://img.shields.io/badge/🔗_Backend_Repo-View_Code-22c55e?style=for-the-badge&logo=github&logoColor=white" alt="Backend Repo" />
+  </a>
 
-```bash
-npm install
-npm run dev # Port 5001
-```
+</div>
 
-## 🔌 Exposed Components
+<br />
 
-### For the Shell
-```javascript
-// LoginForm
-import('authMF/Login')
+## 📋 Overview
 
-// RegisterForm
-import('authMF/Register')
+The **Auth Microfrontend** is the secure gateway to the BioTech ecosystem. Integrated securely into the main [Shell Application](https://biotech-shell.vercel.app/), it handles user sessions, farm authentication, and access control.
 
-// UserProfile
-import('authMF/UserProfile')
+---
 
-// AuthStore
-import('authMF/AuthStore')
-```
+## ✨ Key Features
 
-## 📁 Structure
+- **🔐 Secure Login**: JWT-based authentication flow.
+- **📝 Registration**: User onboarding with farm association.
+- **👤 Profile Management**: User settings and profile updates.
+- **🔄 Session Sync**: Seamless state sharing with the Shell app.
 
-```
-src/
-├── features/
-│ ├── login/
-│ │ ├── components/
-│ │ │ └── LoginForm.jsx
-│ │ ├── hooks/
-│ │ │ └── useLogin.js
-│ │ ├── services/
-│ │ │ └── loginService.js
-│ │ └── validations/
-│ │ └── loginSchema.js
-│ ├── register/
-│ │ ├── components/
-│ │ ├── hooks/
-│ │ └── services/
-│ └── profile/
-│ ├── components/
-│ └── hooks/
-├── shared/
-│ ├── store/
-│ │ └── authStore.js
-│ ├── utils/
-│ │ ├── apiClient.js
-│ │ └── tokenManager.js
-│ └── constants/
-└── App.jsx
-```
+---
 
-## 🔑 Authentication Flow
+## 🛠️ Tech Stack
 
-1. User enters credentials
-2. Validation with Yup
-3. POST request to `/auth/login`
-4. Token saved in cookie
-5. Redirect to dashboard
-6. Token included in request headers
+- **Framework**: React 19
+- **Build Tool**: Vite
+- **Styling**: TailwindCSS
+- **State**: Zustand
+- **HTTP Client**: Axios
 
-## 🌍 Endpoints API
+---
 
-```javascript
-POST /api/auth/login // Login
-POST /api/auth/register // Registration
-GET /api/auth/profile // Profile
-PUT /api/auth/profile // Update profile
-POST /api/auth/logout // Logout
-POST /api/auth/refresh // Refresh token
-```
+## 🚀 Getting Started
 
-## 🎨 Store Usage
+1.  **Clone the repository**
 
-```javascript
-import { useAuthStore } from 'authMF/AuthStore'
+    ```bash
+    git clone https://github.com/Nikotastic/biotech-auth-mf.git
+    cd biotech-auth-mf
+    ```
 
-const { user, isAuthenticated, setAuth, logout } = useAuthStore()
+2.  **Install dependencies**
 
-// Login
-setAuth(userData, token)
+    ```bash
+    npm install
+    ```
 
-// Logout
-logout()
-```
+3.  **Run Development Server**
+    ```bash
+    npm run dev
+    ```
+    Running on: `http://localhost:5001`
 
-## 🔒 Token Management
+---
 
-```javascript
-// tokenManager.js
-setToken(token) // Save token
-getToken() // Get token
-removeToken() // Remove token
-```
+## 🤝 Contributing & Credits
 
-## 📝 Validations
+<div align="center">
 
-### Login Schema
-```javascript
-{ 
-email: string().email().required(), 
-password: string().min(6).required()
-}
-```
+**Core Architecture & Development**<br>
+Built with ❤️ by [**@Nikotastic**](https://github.com/Nikotastic)
 
-### Registration Scheme
-```javascript
-{ 
-name: string().required(), 
-email: string().email().required(), 
-password: string().min(6).required(), 
-confirmPassword: string().oneOf([ref('password')])
-}
-```
+  <br>
 
-## 🔐 Available Roles
+**UX/UI Design & Creative Direction**<br>
+Special thanks to [**@J2rkan**](https://github.com/J2rkan) for the premium design contributions.
 
-```javascript
-export const ROLES = {
-ADMIN: 'Administrator',
-MANAGER: 'Manager',
-VETERINARIAN: 'Veterinarian',
-OPERATOR: 'Operator',
-VIEWER: 'Viewer'
-}
-```
+</div>
 
-## 🚀 Deploy
+<br>
 
-```bash
-npm run build
-vercel --prod
-```
+---
 
-## 🧪 Testing
-
-```bash
-npm run test # Unit Tests
-npm run test:e2e # E2E Tests
-```
-
-## 📄 Environment Variables
-
-```env
-VITE_API_GATEWAY_URL=http://localhost:8000/api
-VITE_TOKEN_EXPIRY=7d
-```
-
-## 🤝 Shell Integration
-
-```javascript
-// In biotech-shell/vite.config.js
-remotes: { 
-authMF: { 
-external: 'http://localhost:5001/assets/remoteEntry.js', 
-from: 'vite', 
-format: 'esm' 
-}
-}
-```
-
-## 📞 Contact
-
-- Email: auth@biotech.com
-```
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=6366f1&height=100&section=footer" width="100%" />
+</div>

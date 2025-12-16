@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import { useAuthStore } from "@shared/store/authStore";
 import { useToastStore } from "@shared/store/toastStore";
 import { farmService } from "../services/farmService";
+import { CreateFarmModal } from "./CreateFarmModal";
 
 export default function FarmSelector() {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ export default function FarmSelector() {
     storedSelectedFarm?.id || null
   );
   const [loading, setLoading] = useState(true);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchFarms = async () => {
@@ -116,8 +118,22 @@ export default function FarmSelector() {
   };
 
   const handleCreateFarm = () => {
-    addToast("🚧 Funcionalidad de crear granja en construcción", "info");
-    // Here you would navigate to /create-farm or open a modal
+    setIsCreateModalOpen(true);
+  };
+
+  const handleCreateFarmSubmit = async (farmData) => {
+    try {
+      const newFarm = await farmService.createFarm(farmData);
+      addToast(`✅ Granja "${farmData.name}" creada exitosamente`, "success");
+      // Add new farm to list
+      setFarms((prev) => [...prev, newFarm]);
+      // Auto-select the new farm
+      setSelectedFarmLocal(newFarm.id);
+    } catch (error) {
+      console.error("Error creating farm:", error);
+      addToast("❌ Error al crear la granja. Intenta nuevamente.", "error");
+      throw error; // Re-throw to let modal handle it
+    }
   };
 
   if (loading) {
@@ -271,6 +287,13 @@ export default function FarmSelector() {
         >
           © 2024 BioTech Farm Management. Todos los derechos reservados.
         </motion.p>
+
+        {/* Create Farm Modal */}
+        <CreateFarmModal
+          isOpen={isCreateModalOpen}
+          onClose={() => setIsCreateModalOpen(false)}
+          onSubmit={handleCreateFarmSubmit}
+        />
       </motion.div>
     </div>
   );

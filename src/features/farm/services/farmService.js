@@ -12,7 +12,7 @@ export const farmService = {
       : {};
 
     // Use apiClient instead of direct axios to ensure production URL
-    const response = await apiClient.get("/farms/user", config);
+    const response = await apiClient.get("/Farms/user", config);
     return response.data;
   },
 };

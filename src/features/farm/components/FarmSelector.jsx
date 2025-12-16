@@ -131,7 +131,24 @@ export default function FarmSelector() {
       setSelectedFarmLocal(newFarm.id);
     } catch (error) {
       console.error("Error creating farm:", error);
-      addToast("❌ Error al crear la granja. Intenta nuevamente.", "error");
+
+      // Check if it's a 404 (endpoint doesn't exist)
+      if (error.response?.status === 404) {
+        addToast(
+          "🚧 Funcionalidad en mantenimiento. Pronto podrás crear granjas desde aquí.",
+          "warning"
+        );
+      } else if (error.response?.status === 500) {
+        addToast(
+          "⚠️ Error del servidor. Por favor intenta más tarde.",
+          "error"
+        );
+      } else {
+        addToast(
+          "❌ Error al crear la granja. Verifica tu conexión e intenta nuevamente.",
+          "error"
+        );
+      }
       throw error; // Re-throw to let modal handle it
     }
   };

@@ -34,4 +34,10 @@ export const farmService = {
     const response = await apiClient.get(`/Farm/tenant/${userId}`, config);
     return response.data;
   },
+
+  async createFarm(farmData) {
+    // POST /api/Farm
+    const response = await apiClient.post("/Farm", farmData);
+    return response.data;
+  },
 };

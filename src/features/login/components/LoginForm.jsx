@@ -27,10 +27,15 @@ export default function LoginForm() {
 
       // Check if user has farms
       try {
-        const farms = await farmService.getUserFarms(
+        const farmsData = await farmService.getUserFarms(
           loginData.token,
           loginData.user.id
         );
+        // Backend returns FarmListResponse = { farms: [...] }
+        const farms = Array.isArray(farmsData)
+          ? farmsData
+          : farmsData?.farms || [];
+
         if (farms && farms.length > 0) {
           // If user has farms, go to selector
           addToast(

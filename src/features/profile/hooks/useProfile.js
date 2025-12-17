@@ -24,8 +24,8 @@ export const useProfile = () => {
   useEffect(() => {
     // Initial fetch to ensure we have latest data
     if (token) {
-      if (user) setProfileData(user); // Optimistic
-      fetchProfile();
+      if (user) setProfileData(user);
+      // fetchProfile(); // Evitar sobrescritura con datos vacíos del backend
     }
   }, [token]);
 
@@ -36,7 +36,18 @@ export const useProfile = () => {
     try {
       // Corrected endpoint path to match ProfileController: api/auth/profile
       const response = await apiClient.put("/auth/profile", data);
-      setProfileData((prev) => ({ ...prev, ...data })); // Optimistic or use response if it returns updated data
+
+      const updatedData = {
+        ...profileData,
+        ...data,
+        name: data.fullName || data.name || profileData.name,
+      };
+      setProfileData(updatedData);
+
+      // Actualizar el store global para persistencia (localStorage)
+      const { setAuth } = useAuthStore.getState();
+      setAuth(updatedData, token);
+
       return response.data;
     } catch (err) {
       const errorMessage =

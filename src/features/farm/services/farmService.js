@@ -29,15 +29,26 @@ export const farmService = {
       throw new Error("User ID is required to fetch farms");
     }
 
-    // Correct endpoint matching FarmController.cs: [HttpGet("tenant/{tenantId}")] inside [Route("api/[controller]")]
-    // So the path is /Farm/tenant/{id}
-    const response = await apiClient.get(`/Farm/tenant/${userId}`, config);
-    return response.data;
+    // Backend route: /api/v1/Farms/tenant/{userId}
+    const response = await apiClient.get(`/v1/Farms/tenant/${userId}`, config);
+    // Backend returns ApiResponse<FarmListResponse> = { success, data: { farms: [...] }, message }
+    return response.data?.data || response.data;
   },
 
   async createFarm(farmData) {
-    // POST /api/Farm
-    const response = await apiClient.post("/Farm", farmData);
-    return response.data;
+    // POST /api/v1/Farms
+    const response = await apiClient.post("/v1/Farms", farmData);
+    // Backend returns ApiResponse<FarmResponse> = { success, data: {...}, message }
+    return response.data?.data || response.data;
+  },
+
+  async getFarmById(farmId) {
+    // GET /api/v1/Farms/{id}
+    if (!farmId) {
+      throw new Error("Farm ID is required");
+    }
+    const response = await apiClient.get(`/v1/Farms/${farmId}`);
+    // Backend returns ApiResponse<FarmResponse> = { success, data: {...}, message }
+    return response.data?.data || response.data;
   },
 };

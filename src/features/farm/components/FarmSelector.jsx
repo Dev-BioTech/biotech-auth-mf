@@ -42,8 +42,10 @@ export default function FarmSelector() {
           return;
         }
         const data = await farmService.getUserFarms(token, user?.id);
-        // Ensure data is an array
-        let farmList = Array.isArray(data) ? data : [];
+
+        // Backend returns FarmListResponse = { farms: [...] }
+        // Extract the farms array from the response
+        let farmList = Array.isArray(data) ? data : data?.farms || [];
 
         // Inject Demo Farm if empty (Requested by User for testing)
         if (farmList.length === 0) {

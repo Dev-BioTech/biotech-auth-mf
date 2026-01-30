@@ -135,6 +135,7 @@ export const useAuth = () => {
     updateUser,
 
     // Métodos de validación de roles
+    // Métodos de validación
     isTokenValid,
     getUserFromToken,
     getTokenPayload,
